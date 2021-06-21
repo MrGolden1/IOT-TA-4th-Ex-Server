@@ -14,13 +14,13 @@ import time
 
 def generate_expression():
 
+
+    random.seed(int(time.time()))
     item_no = random.randint(10, 20)
 
 
     sol = random.randint(1, 1000)
     ex = str(sol)
-
-    random.seed(item_no)
 
     for i in range(item_no):
         num = random.randint(1, 1000)
