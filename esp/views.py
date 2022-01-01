@@ -81,6 +81,21 @@ def get_expression(request):
 
     return Response(data={'expression':ex},status=status.HTTP_200_OK)
 
+with open("sentences.txt", "r") as f:
+    sentences = f.readlines()
+
+def generate_sentece():
+    random.seed(int(time.time()))
+    sentence = sentences[random.randint(0, len(sentences) - 1)]
+    # for each cahracter in sentence 'a-z''A-Z' randomlly make upper or lower case
+    ex = [sentence[i].lower() if random.randint(0, 1) % 2 == 0 else sentence[i].upper() for i in range(len(sentence))]
+    # solution is : every first letter in word is capital and others are lower case
+    words = sentence.split(' ')
+    sol = [words[i][0].upper() + words[i][1:].lower() for i in range(len(words))]
+    return ''.join(ex), ' '.join(sol)
+    
+                   
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def submit_solution(request):
@@ -96,6 +111,48 @@ def submit_solution(request):
 
     try:
         sol = int(request.data['solution'])
+    except:
+        return Response(data={'error':'solution not found or presencted in wrong format.'},status=status.HTTP_400_BAD_REQUEST)
+
+
+    if user.solution == sol:
+        return Response(data={'result':'correct'},status=status.HTTP_200_OK)
+    else:
+        return Response(data={'result':'wrong'},status=status.HTTP_200_OK)
+    
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def sentence_get(request):
+
+    user = request.user
+    user : User
+    
+    ex , sol = generate_sentece()
+    
+    user.expression = ex
+    user.solution = sol
+    user.exp_timestamp = int(time.time()) + 1
+    
+    user.save()
+    
+    return Response(data={'expression':ex},status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def sentence_submit(request):
+    
+    user = request.user
+    user : User
+
+
+    now = int(time.time())
+
+    if now - user.exp_timestamp > 5:
+        return Response(data={'error':'time limit , you should sumbit your solution under 5 second. Please get a new expression and try again'},status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        sol = request.data['expression']
     except:
         return Response(data={'error':'solution not found or presencted in wrong format.'},status=status.HTTP_400_BAD_REQUEST)
 
