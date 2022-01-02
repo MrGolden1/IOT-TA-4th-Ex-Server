@@ -131,7 +131,7 @@ def sentence_get(request):
     ex , sol = generate_sentece()
     
     user.expression = ex
-    user.solution2 = sol
+    user.solution = sol
     user.exp_timestamp = int(time.time()) + 1
     
     user.save()
@@ -157,7 +157,7 @@ def sentence_submit(request):
         return Response(data={'error':'solution not found or presencted in wrong format.'},status=status.HTTP_400_BAD_REQUEST)
 
 
-    if user.solution2 == sol:
+    if user.solution == sol:
         return Response(data={'result':'correct'},status=status.HTTP_200_OK)
     else:
         return Response(data={'result':'wrong'},status=status.HTTP_200_OK)
