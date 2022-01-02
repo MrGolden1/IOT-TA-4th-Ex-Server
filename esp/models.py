@@ -39,7 +39,7 @@ class User(AbstractUser):
     chipID        = models.IntegerField(_("chip ID"),unique=True)
     studentID     = models.IntegerField(_("student ID"))
     expression    = models.CharField(_("expression"), max_length=200,blank=True,null=True)
-    # solution      = models.CharField(_("solution"), max_length=200,blank=True,null=True)
+    solution      = models.CharField(_("solution"), max_length=200,blank=True,null=True)
     exp_timestamp = models.IntegerField(_("expression timestamp"),blank=True,null=True)
     created       = models.DateTimeField(_("Created"), auto_now_add=True)
     updated       = models.DateTimeField(_("Created"), auto_now=True)

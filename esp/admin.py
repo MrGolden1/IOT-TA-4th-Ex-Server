@@ -10,7 +10,7 @@ from rest_framework.authtoken.models import Token
 @admin.register(User)
 class UserAdmin(django_UserAdmin):
 
-    list_display =  ['id','first_name','last_name','chipID','studentID','expression','created','updated']
+    list_display =  ['id','first_name','last_name','chipID','studentID','expression','solution','created','updated']
     ordering = ()
 
 # @admin.register(Token)
