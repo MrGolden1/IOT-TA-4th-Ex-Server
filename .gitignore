@@ -634,7 +634,7 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/python,django,pycharm,visualstudio,visualstudiocode
-**/migrations/*
+# **/migrations/*
 books/migrations/*
 parents/migrations/*
 users/migrations/*sendgrid.env
