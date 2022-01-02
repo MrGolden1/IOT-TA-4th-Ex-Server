@@ -11,7 +11,7 @@ from rest_framework.authtoken.models import Token
 class UserAdmin(django_UserAdmin):
 
     list_display =  ['id','first_name','last_name','chipID','studentID','expression','solution','created','updated']
-    exclude = []
+    exclude = ['username','email']
     ordering = ()
 
 # @admin.register(Token)
